@@ -24,7 +24,7 @@ module Khipu
     def initialize(host = nil)
       @host = host || Configuration.base_url
       @format = 'json'
-      @user_agent = "khipu-api-client-ruby/#{VERSION}"
+      @user_agent = "khipu-api-ruby-client/#{VERSION}"
       @default_headers = {
         'Content-Type' => "application/#{@format.downcase}",
         'User-Agent' => @user_agent
