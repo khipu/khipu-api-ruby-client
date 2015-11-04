@@ -6,12 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "khipu-api-client"
   s.version     = Khipu::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Zeke Sikelianos", "Tony Tam"]
-  s.email       = ["zeke@wordnik.com", "fehguy@gmail.com"]
-  s.homepage    = "http://swagger.io"
-  s.summary     = %q{A ruby wrapper for the swagger APIs}
-  s.description = %q{This gem maps to a swagger API}
-  s.license     = "Apache-2.0"
+  s.authors     = ["khipu"]
+  s.email       = ["developers@khipu.com"]
+  s.homepage    = "https://github.com/khipu/khipu-api-ruby-client"
+  s.summary     = %q{A ruby wrapper for the khipu APIs}
+    s.license     = "Apache-2.0"
 
   s.add_runtime_dependency 'typhoeus', '~> 0.2', '>= 0.2.1'
   s.add_runtime_dependency 'json', '~> 1.4', '>= 1.4.6'
