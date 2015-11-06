@@ -1,7 +1,7 @@
 module Khipu
   # 
   class PaymentResponse < BaseObject
-    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :app_url, :ready_for_terminal, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation
+    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :app_url, :ready_for_terminal, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation, :transaction_id, :custom, :responsible_user_email, :send_reminders
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -85,7 +85,19 @@ module Khipu
         :'bank_account_number' => :'bank_account_number',
         
         # 
-        :'out_of_date_conciliation' => :'out_of_date_conciliation'
+        :'out_of_date_conciliation' => :'out_of_date_conciliation',
+        
+        # 
+        :'transaction_id' => :'transaction_id',
+        
+        # 
+        :'custom' => :'custom',
+        
+        # 
+        :'responsible_user_email' => :'responsible_user_email',
+        
+        # 
+        :'send_reminders' => :'send_reminders'
         
       }
     end
@@ -119,7 +131,11 @@ module Khipu
         :'payer_email' => :'String',
         :'personal_identifier' => :'String',
         :'bank_account_number' => :'String',
-        :'out_of_date_conciliation' => :'BOOLEAN'
+        :'out_of_date_conciliation' => :'BOOLEAN',
+        :'transaction_id' => :'String',
+        :'custom' => :'String',
+        :'responsible_user_email' => :'String',
+        :'send_reminders' => :'String'
         
       }
     end
@@ -239,6 +255,22 @@ module Khipu
       
       if attributes[:'out_of_date_conciliation']
         self.out_of_date_conciliation = attributes[:'out_of_date_conciliation']
+      end
+      
+      if attributes[:'transaction_id']
+        self.transaction_id = attributes[:'transaction_id']
+      end
+      
+      if attributes[:'custom']
+        self.custom = attributes[:'custom']
+      end
+      
+      if attributes[:'responsible_user_email']
+        self.responsible_user_email = attributes[:'responsible_user_email']
+      end
+      
+      if attributes[:'send_reminders']
+        self.send_reminders = attributes[:'send_reminders']
       end
       
     end
