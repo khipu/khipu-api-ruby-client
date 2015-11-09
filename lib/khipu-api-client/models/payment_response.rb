@@ -1,7 +1,7 @@
 module Khipu
   # 
   class PaymentResponse < BaseObject
-    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :app_url, :ready_for_terminal, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation, :transaction_id, :custom, :responsible_user_email, :send_reminders
+    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :app_url, :ready_for_terminal, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation, :transaction_id, :custom, :responsible_user_email, :send_reminders, :send_email
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -97,7 +97,10 @@ module Khipu
         :'responsible_user_email' => :'responsible_user_email',
         
         # 
-        :'send_reminders' => :'send_reminders'
+        :'send_reminders' => :'send_reminders',
+        
+        # 
+        :'send_email' => :'send_email'
         
       }
     end
@@ -135,7 +138,8 @@ module Khipu
         :'transaction_id' => :'String',
         :'custom' => :'String',
         :'responsible_user_email' => :'String',
-        :'send_reminders' => :'String'
+        :'send_reminders' => :'String',
+        :'send_email' => :'BOOLEAN'
         
       }
     end
@@ -271,6 +275,10 @@ module Khipu
       
       if attributes[:'send_reminders']
         self.send_reminders = attributes[:'send_reminders']
+      end
+      
+      if attributes[:'send_email']
+        self.send_email = attributes[:'send_email']
       end
       
     end

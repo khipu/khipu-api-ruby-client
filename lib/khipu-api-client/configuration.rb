@@ -95,6 +95,10 @@ module Khipu
 
     attr_accessor :receiver_id
 
+    attr_accessor :platform
+
+    attr_accessor :platform_version
+
     class << self
       def method_missing(method_name, *args, &block)
         config = Configuration.instance

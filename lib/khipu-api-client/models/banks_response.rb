@@ -15,7 +15,7 @@ module Khipu
     # attribute type
     def self.swagger_types
       {
-        :'banks' => :'BankItem'
+        :'banks' => :'Array<BankItem>'
         
       }
     end
@@ -28,7 +28,9 @@ module Khipu
 
       
       if attributes[:'banks']
-        self.banks = attributes[:'banks']
+        if (value = attributes[:'banks']).is_a?(Array)
+          self.banks = value
+        end
       end
       
     end

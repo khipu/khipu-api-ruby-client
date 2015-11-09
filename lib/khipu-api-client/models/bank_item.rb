@@ -1,10 +1,13 @@
 module Khipu
   # 
   class BankItem < BaseObject
-    attr_accessor :name, :message, :min_amount, :type, :parent
+    attr_accessor :bank_id, :name, :message, :min_amount, :type, :parent
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
+        
+        # 
+        :'bank_id' => :'bank_id',
         
         # 
         :'name' => :'name',
@@ -27,6 +30,7 @@ module Khipu
     # attribute type
     def self.swagger_types
       {
+        :'bank_id' => :'String',
         :'name' => :'String',
         :'message' => :'String',
         :'min_amount' => :'Float',
@@ -42,6 +46,10 @@ module Khipu
       # convert string to symbol for hash key
       attributes = attributes.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
 
+      
+      if attributes[:'bank_id']
+        self.bank_id = attributes[:'bank_id']
+      end
       
       if attributes[:'name']
         self.name = attributes[:'name']
