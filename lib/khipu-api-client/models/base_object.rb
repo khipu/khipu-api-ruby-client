@@ -37,7 +37,7 @@ module Khipu
       when :Float
         value.to_f
       when :BOOLEAN
-        if value =~ /^(true|t|yes|y|1)$/i
+        if value == true || value =~ /^(true|t|yes|y|1)$/i
           true
         else
           false
