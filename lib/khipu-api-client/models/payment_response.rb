@@ -138,7 +138,7 @@ module Khipu
         :'transaction_id' => :'String',
         :'custom' => :'String',
         :'responsible_user_email' => :'String',
-        :'send_reminders' => :'String',
+        :'send_reminders' => :'BOOLEAN',
         :'send_email' => :'BOOLEAN'
         
       }

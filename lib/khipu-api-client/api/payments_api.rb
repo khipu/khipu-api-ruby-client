@@ -64,7 +64,7 @@ module Khipu
     # Crea un pago en khipu y obtiene las URLs para redirección al usuario para que complete el pago.
     # @param subject Motivo
     # @param currency El código de moneda en formato ISO-4217
-    # @param amount El monto del cobro. Sin separador de miles y usando \&quot;.\&quot; como separador de decimales. Hasta 4 lugares decimales, dependiendo de la moneda.
+    # @param amount El monto del cobro. Sin separador de miles y usando &#39;.&#39; como separador de decimales. Hasta 4 lugares decimales, dependiendo de la moneda
     # @param [Hash] opts the optional parameters
     # @option opts [String] :transaction_id Identificador propio de la  transacción. Ej: número de factura u orden de compra
     # @option opts [String] :custom Parámetro para enviar información personalizada de la transacción. Ej: documento XML con el detalle del carro de compra
@@ -76,10 +76,10 @@ module Khipu
     # @option opts [String] :notify_url La dirección del web-service que utilizará khipu para notificar cuando el pago esté conciliado
     # @option opts [String] :notify_api_version Versión de la API de notifiaciones para recibir avisos por web-service
     # @option opts [DateTime] :expires_date Fecha de expiración del cobro. Pasada esta fecha el cobro es inválido. Formato ISO-8601. Ej: 2017-03-01T13:00:00Z
-    # @option opts [BOOLEAN] :send_email Si es \&quot;true\&quot;, se enviará una solicitud de cobro al correo especificado en \&quot;payer_email\&quot;
-    # @option opts [String] :payer_name Nombre del pagador. Es obligatorio cuando send_email es \&quot;true\&quot;
-    # @option opts [String] :payer_email Correo del pagador. Es obligatorio cuando send_email es \&quot;true\&quot;
-    # @option opts [BOOLEAN] :send_reminders Si es \&quot;true\&quot;, se enviarán recordatorios de cobro.
+    # @option opts [BOOLEAN] :send_email Si es &#39;true&#39;, se enviará una solicitud de cobro al correo especificado en &#39;payer_email&#39;
+    # @option opts [String] :payer_name Nombre del pagador. Es obligatorio cuando send_email es &#39;true&#39;
+    # @option opts [String] :payer_email Correo del pagador. Es obligatorio cuando send_email es &#39;true&#39;
+    # @option opts [BOOLEAN] :send_reminders Si es &#39;true&#39;, se enviarán recordatorios de cobro.
     # @option opts [String] :responsible_user_email Correo electrónico del responsable de este cobro, debe corresponder a un usuario khipu con permisos para cobrar usando esta cuenta de cobro
     # @option opts [String] :fixed_payer_personal_identifier Identificador personal. Si se especifica, solo podrá ser pagado usando ese identificador
     # @option opts [Float] :integrator_fee Comisión para el integrador. Sólo es válido si la cuenta de cobro tiene una cuenta de integrador asociada
