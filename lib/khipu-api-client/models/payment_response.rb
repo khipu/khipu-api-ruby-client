@@ -124,7 +124,7 @@ module Khipu
         :'app_url' => :'String',
         :'ready_for_terminal' => :'BOOLEAN',
         :'notification_token' => :'String',
-        :'receiver_id' => :'Float',
+        :'receiver_id' => :'Integer',
         :'conciliation_date' => :'DateTime',
         :'subject' => :'String',
         :'amount' => :'Float',
