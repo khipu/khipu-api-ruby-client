@@ -1,7 +1,7 @@
 module Khipu
   # 
   class PaymentResponse < BaseObject
-    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :app_url, :ready_for_terminal, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation, :transaction_id, :custom, :responsible_user_email, :send_reminders, :send_email
+    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :app_url, :ready_for_terminal, :notification_token, :receiver_id, :conciliation_date, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation, :transaction_id, :custom, :responsible_user_email, :send_reminders, :send_email
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -23,6 +23,15 @@ module Khipu
         
         # 
         :'ready_for_terminal' => :'ready_for_terminal',
+        
+        # 
+        :'notification_token' => :'notification_token',
+        
+        # 
+        :'receiver_id' => :'receiver_id',
+        
+        # 
+        :'conciliation_date' => :'conciliation_date',
         
         # 
         :'subject' => :'subject',
@@ -114,6 +123,9 @@ module Khipu
         :'transfer_url' => :'String',
         :'app_url' => :'String',
         :'ready_for_terminal' => :'BOOLEAN',
+        :'notification_token' => :'String',
+        :'receiver_id' => :'Float',
+        :'conciliation_date' => :'DateTime',
         :'subject' => :'String',
         :'amount' => :'Float',
         :'currency' => :'String',
@@ -173,6 +185,18 @@ module Khipu
       
       if attributes[:'ready_for_terminal']
         self.ready_for_terminal = attributes[:'ready_for_terminal']
+      end
+      
+      if attributes[:'notification_token']
+        self.notification_token = attributes[:'notification_token']
+      end
+      
+      if attributes[:'receiver_id']
+        self.receiver_id = attributes[:'receiver_id']
+      end
+      
+      if attributes[:'conciliation_date']
+        self.conciliation_date = attributes[:'conciliation_date']
       end
       
       if attributes[:'subject']
