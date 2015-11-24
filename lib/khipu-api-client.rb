@@ -6,8 +6,9 @@ require 'khipu-api-client/configuration'
 
 # Models
 require 'khipu-api-client/models/base_object'
-require 'khipu-api-client/models/payment_response'
-require 'khipu-api-client/models/create_response'
+require 'khipu-api-client/models/payments_response'
+require 'khipu-api-client/models/payments_create_response'
+require 'khipu-api-client/models/receivers_create_response'
 require 'khipu-api-client/models/banks_response'
 require 'khipu-api-client/models/bank_item'
 require 'khipu-api-client/models/success_response'
@@ -19,6 +20,7 @@ require 'khipu-api-client/models/error_item'
 # APIs
 require 'khipu-api-client/api/banks_api'
 require 'khipu-api-client/api/payments_api'
+require 'khipu-api-client/api/receivers_api'
 
 module Khipu
   class << self

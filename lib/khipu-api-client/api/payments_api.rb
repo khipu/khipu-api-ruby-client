@@ -12,7 +12,7 @@ module Khipu
     # Información completa del pago. Datos con los que fue creado y el estado actual del pago. Se obtiene del notification_token que envia khipu cuando el pago es conciliado.
     # @param notification_token Token de notifiación recibido usando la API de notificaiones 1.3 o superior.
     # @param [Hash] opts the optional parameters
-    # @return [PaymentResponse]
+    # @return [PaymentsResponse]
     def payments_get(notification_token, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: PaymentsApi#payments_get ..."
@@ -53,7 +53,7 @@ module Khipu
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
-        :return_type => 'PaymentResponse')
+        :return_type => 'PaymentsResponse')
       if Configuration.debugging
         Configuration.logger.debug "API called: PaymentsApi#payments_get. Result: #{result.inspect}"
       end
@@ -83,7 +83,7 @@ module Khipu
     # @option opts [String] :responsible_user_email Correo electrónico del responsable de este cobro, debe corresponder a un usuario khipu con permisos para cobrar usando esta cuenta de cobro
     # @option opts [String] :fixed_payer_personal_identifier Identificador personal. Si se especifica, solo podrá ser pagado usando ese identificador
     # @option opts [Float] :integrator_fee Comisión para el integrador. Sólo es válido si la cuenta de cobro tiene una cuenta de integrador asociada
-    # @return [CreateResponse]
+    # @return [PaymentsCreateResponse]
     def payments_post(subject, currency, amount, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: PaymentsApi#payments_post ..."
@@ -149,7 +149,7 @@ module Khipu
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
-        :return_type => 'CreateResponse')
+        :return_type => 'PaymentsCreateResponse')
       if Configuration.debugging
         Configuration.logger.debug "API called: PaymentsApi#payments_post. Result: #{result.inspect}"
       end
@@ -160,7 +160,7 @@ module Khipu
     # Información completa del pago. Datos con los que fue creado y el estado actual del pago.
     # @param id Identificador del pago
     # @param [Hash] opts the optional parameters
-    # @return [PaymentResponse]
+    # @return [PaymentsResponse]
     def payments_id_get(id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: PaymentsApi#payments_id_get ..."
@@ -200,7 +200,7 @@ module Khipu
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
-        :return_type => 'PaymentResponse')
+        :return_type => 'PaymentsResponse')
       if Configuration.debugging
         Configuration.logger.debug "API called: PaymentsApi#payments_id_get. Result: #{result.inspect}"
       end
