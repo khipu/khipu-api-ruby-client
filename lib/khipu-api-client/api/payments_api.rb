@@ -258,10 +258,11 @@ module Khipu
       return result
     end
 
-    # Reembolsar un pago
-    # Reembolsa el total del monto del pago. Esta operación solo se puede realizar en los comercios que recauden en cuenta khipu y antes de la rendición de los fondos correspondientes.
+    # Reembolsar total o parcialmente un pago
+    # Reembolsa total o parcialmente el monto de un pago. Esta operación solo se puede realizar en los comercios que recauden en cuenta khipu y antes de la rendición de los fondos correspondientes.
     # @param id Identificador del pago
     # @param [Hash] opts the optional parameters
+    # @option opts [Float] :amount El monto a devolver. Sin separador de miles y usando &#39;.&#39; como separador de decimales. Hasta 4 lugares decimales, dependiendo de la moneda. Si se omite el reembolso se hará por el total del monto del pago.
     # @return [SuccessResponse]
     def payments_id_refunds_post(id, opts = {})
       if Configuration.debugging
@@ -290,6 +291,7 @@ module Khipu
 
       # form parameters
       form_params = {}
+      form_params["amount"] = opts[:'amount'] if opts[:'amount']
 
       # http body (model)
       post_body = nil
