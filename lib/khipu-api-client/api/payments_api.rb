@@ -74,6 +74,7 @@ module Khipu
     # @option opts [String] :cancel_url La dirección URL a donde enviar al cliente si decide no hacer hacer la transacción
     # @option opts [String] :picture_url Una dirección URL de una foto de tu producto o servicio
     # @option opts [String] :notify_url La dirección del web-service que utilizará khipu para notificar cuando el pago esté conciliado
+    # @option opts [String] :contract_url La dirección URL del archivo PDF con el contrato a firmar mediante este pago. El cobrador debe estar habilitado para este servicio y el campo &#39;fixed_payer_personal_identifier&#39; es obgligatorio
     # @option opts [String] :notify_api_version Versión de la API de notifiaciones para recibir avisos por web-service
     # @option opts [DateTime] :expires_date Fecha de expiración del cobro. Pasada esta fecha el cobro es inválido. Formato ISO-8601. Ej: 2017-03-01T13:00:00Z
     # @option opts [BOOLEAN] :send_email Si es &#39;true&#39;, se enviará una solicitud de cobro al correo especificado en &#39;payer_email&#39;
@@ -128,6 +129,7 @@ module Khipu
       form_params["cancel_url"] = opts[:'cancel_url'] if opts[:'cancel_url']
       form_params["picture_url"] = opts[:'picture_url'] if opts[:'picture_url']
       form_params["notify_url"] = opts[:'notify_url'] if opts[:'notify_url']
+      form_params["contract_url"] = opts[:'contract_url'] if opts[:'contract_url']
       form_params["notify_api_version"] = opts[:'notify_api_version'] if opts[:'notify_api_version']
       form_params["expires_date"] = opts[:'expires_date'] if opts[:'expires_date']
       form_params["send_email"] = opts[:'send_email'] if opts[:'send_email']
