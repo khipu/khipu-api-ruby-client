@@ -1,115 +1,118 @@
 module Khipu
   # 
   class PaymentsResponse < BaseObject
-    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :app_url, :ready_for_terminal, :notification_token, :receiver_id, :conciliation_date, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation, :transaction_id, :custom, :responsible_user_email, :send_reminders, :send_email
+    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :app_url, :ready_for_terminal, :notification_token, :receiver_id, :conciliation_date, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation, :transaction_id, :custom, :responsible_user_email, :send_reminders, :send_email, :payment_method
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
         
-        # 
+        # Identificador único del pago, es una cadena alfanumérica de 12 caracteres
         :'payment_id' => :'payment_id',
         
-        # 
+        # URL principal del pago, si el usuario no ha elegido previamente un método de pago se le muestran las opciones
         :'payment_url' => :'payment_url',
         
-        # 
+        # URL de pago simplificado
         :'simplified_transfer_url' => :'simplified_transfer_url',
         
-        # 
+        # URL de pago normal
         :'transfer_url' => :'transfer_url',
         
-        # 
+        # URL para invocar el pago desde un dispositivo móvil usando la APP de khipu
         :'app_url' => :'app_url',
         
-        # 
+        # Es &#39;true&#39; si el pago ya cuenta con todos los datos necesarios para abrir directamente la aplicación de pagos khipu
         :'ready_for_terminal' => :'ready_for_terminal',
         
-        # 
+        # Cadena de caracteres alfanuméricos que identifican unicamente al pago, es el identificador que el servidor de khipu enviará al servidor del comercio cuando notifique que un pago está conciliado
         :'notification_token' => :'notification_token',
         
-        # 
+        # Identificador único de una cuenta de cobro
         :'receiver_id' => :'receiver_id',
         
-        # 
+        # Fecha y hora de conciliación del pago. Formato ISO-8601. Ej: 2017-03-01T13:00:00Z
         :'conciliation_date' => :'conciliation_date',
         
-        # 
+        # Motivo del pago
         :'subject' => :'subject',
         
         # 
         :'amount' => :'amount',
         
-        # 
+        # El código de moneda en formato ISO-4217
         :'currency' => :'currency',
         
-        # 
+        # Estado del pago, puede ser &#39;pending&#39; (el pagador aún no comienza a pagar), &#39;verifying&#39; (se está verificando el pago) o &#39;done&#39;, cuando el pago ya está confirmado
         :'status' => :'status',
         
-        # 
+        # Detalle del estado del pago, &#39;pending&#39; (el pagadon aún no comienza a pagar), &#39;normal&#39; (el pago fue verificado y fue cancelado por algún medio de pago estandar), &#39;marked-paid-by-receiver&#39; (el cobrador marco el cobro como pagado por otro medio), &#39;rejected-by-payer&#39; (el pagador declaró que no pagará), &#39;marked-as-abuse&#39; (el pagador declaró que no pagará y que el cobro fue no solicitado) y &#39;reversed&#39; (el pago fue anulado por el comercio, el dinero fue devuelto al pagador).
         :'status_detail' => :'status_detail',
         
-        # 
+        # Detalle del cobro
         :'body' => :'body',
         
-        # 
+        # URL de cobro
         :'picture_url' => :'picture_url',
         
-        # 
+        # URL del comprobante de pago
         :'receipt_url' => :'receipt_url',
         
-        # 
+        # URL donde se redirige al pagador luego que termina el pago
         :'return_url' => :'return_url',
         
-        # 
+        # URL donde se redirige al pagador luego de que desiste hacer el pago
         :'cancel_url' => :'cancel_url',
         
-        # 
+        # URL del webservice donde se notificará el pago
         :'notify_url' => :'notify_url',
         
-        # 
+        # Versión de la api de notificación
         :'notify_api_version' => :'notify_api_version',
         
-        # 
+        # Fecha de expiración del pago. En formato ISO-8601
         :'expires_date' => :'expires_date',
         
-        # 
+        # URLs de archivos adjuntos al pago
         :'attachment_urls' => :'attachment_urls',
         
-        # 
+        # Nombre del banco seleccionado por el pagador
         :'bank' => :'bank',
         
-        # 
+        # Identificador del banco seleccionado por el pagador
         :'bank_id' => :'bank_id',
         
-        # 
+        # Nombre del pagador
         :'payer_name' => :'payer_name',
         
-        # 
+        # Correo electrónico del pagador
         :'payer_email' => :'payer_email',
         
-        # 
+        # Identificador personal del pagador
         :'personal_identifier' => :'personal_identifier',
         
-        # 
+        # Número de cuenta bancaria del pagador
         :'bank_account_number' => :'bank_account_number',
         
-        # 
+        # Es &#39;true&#39; si la conciliación del pago fue hecha luego de la fecha de expiración
         :'out_of_date_conciliation' => :'out_of_date_conciliation',
         
-        # 
+        # Identificador del pago asignado por el cobrador
         :'transaction_id' => :'transaction_id',
         
-        # 
+        # Campo genérico que asigna el cobrador al momento de hacer el pago
         :'custom' => :'custom',
         
-        # 
+        # Correo electrónico de la persona responsable del pago
         :'responsible_user_email' => :'responsible_user_email',
         
-        # 
+        # Es &#39;true&#39; cuando este es un cobro por correo electrónico y khipu enviará recordatorios
         :'send_reminders' => :'send_reminders',
         
-        # 
-        :'send_email' => :'send_email'
+        # Es &#39;true&#39; cuando khipu enviará el cobro por correo electrónico
+        :'send_email' => :'send_email',
+        
+        # Método de pago usado por el pagador, puede ser &#39;regular_transfer&#39; (transferencia normal), &#39;simplified_transfer&#39; (transferencia simplificada) o &#39;not_available&#39; (para un pago marcado como realizado por otro medio por el cobrador).
+        :'payment_method' => :'payment_method'
         
       }
     end
@@ -151,7 +154,8 @@ module Khipu
         :'custom' => :'String',
         :'responsible_user_email' => :'String',
         :'send_reminders' => :'BOOLEAN',
-        :'send_email' => :'BOOLEAN'
+        :'send_email' => :'BOOLEAN',
+        :'payment_method' => :'String'
         
       }
     end
@@ -303,6 +307,10 @@ module Khipu
       
       if attributes[:'send_email']
         self.send_email = attributes[:'send_email']
+      end
+      
+      if attributes[:'payment_method']
+        self.payment_method = attributes[:'payment_method']
       end
       
     end

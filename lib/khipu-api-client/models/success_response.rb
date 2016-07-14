@@ -6,7 +6,7 @@ module Khipu
     def self.attribute_map
       {
         
-        # 
+        # Mensaje a desplegar al usuario
         :'message' => :'message'
         
       }

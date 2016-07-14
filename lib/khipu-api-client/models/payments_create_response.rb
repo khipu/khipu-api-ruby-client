@@ -6,22 +6,22 @@ module Khipu
     def self.attribute_map
       {
         
-        # 
+        # Identificador único del pago, es una cadena alfanumérica de 12 caracteres
         :'payment_id' => :'payment_id',
         
-        # 
+        # URL principal del pago, si el usuario no ha elegido previamente un método de pago se le muestran las opciones
         :'payment_url' => :'payment_url',
         
-        # 
+        # URL de pago simplificado
         :'simplified_transfer_url' => :'simplified_transfer_url',
         
-        # 
+        # URL de pago normal
         :'transfer_url' => :'transfer_url',
         
-        # 
+        # URL para invocar el pago desde un dispositivo móvil usando la APP de khipu
         :'app_url' => :'app_url',
         
-        # 
+        # Es &#39;true&#39; si el pago ya cuenta con todos los datos necesarios para abrir directamente la aplicación de pagos khipu
         :'ready_for_terminal' => :'ready_for_terminal'
         
       }

@@ -6,10 +6,10 @@ module Khipu
     def self.attribute_map
       {
         
-        # 
+        # Campo que tiene el error de validación
         :'field' => :'field',
         
-        # 
+        # Motivo del error de validación
         :'message' => :'message'
         
       }

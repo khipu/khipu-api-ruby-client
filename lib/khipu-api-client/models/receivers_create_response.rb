@@ -6,10 +6,10 @@ module Khipu
     def self.attribute_map
       {
         
-        # 
+        # Identificador único de la cuenta de cobro
         :'receiver_id' => :'receiver_id',
         
-        # 
+        # Llave secreta de la cuenta de cobro, se usa para firmar todas las peticiones
         :'secret' => :'secret'
         
       }

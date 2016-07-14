@@ -6,22 +6,22 @@ module Khipu
     def self.attribute_map
       {
         
-        # 
+        # Identificador del banco
         :'bank_id' => :'bank_id',
         
-        # 
+        # Nombre del banco
         :'name' => :'name',
         
-        # 
+        # Mensaje con particularidades del banco
         :'message' => :'message',
         
-        # 
+        # Monto mínimo que acepta el banco en un pago
         :'min_amount' => :'min_amount',
         
-        # 
+        # Tipo de banco
         :'type' => :'type',
         
-        # 
+        # Identificador del banco padre (si un banco tiene banca personas y empresas, el primero será el padre del segundo)
         :'parent' => :'parent'
         
       }

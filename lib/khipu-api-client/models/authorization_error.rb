@@ -6,10 +6,10 @@ module Khipu
     def self.attribute_map
       {
         
-        # 
+        # Código del error
         :'status' => :'status',
         
-        # 
+        # Mensaje del error
         :'message' => :'message'
         
       }
