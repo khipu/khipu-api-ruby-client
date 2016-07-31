@@ -3,8 +3,6 @@ require 'json'
 require 'logger'
 require 'tempfile'
 require 'typhoeus'
-require 'net/http'
-require 'base64'
 
 module Khipu
   class ApiClient
