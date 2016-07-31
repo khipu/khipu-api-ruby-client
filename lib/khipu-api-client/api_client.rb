@@ -212,10 +212,6 @@ module Khipu
       data
     end
 
-    def percent_encode(v)
-      return URI::escape(v.to_s.to_str, /[^a-zA-Z0-9\-\.\_\~]/)
-    end
-
     # Update header and query params based on authentication settings.
     def update_params_for_auth!(host, path, http_method, header_params, query_params, form_params, auth_names)
       Array(auth_names).each do |auth_name|
