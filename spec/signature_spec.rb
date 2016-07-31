@@ -20,6 +20,12 @@ describe Khipu::Signature do
     end
   end
 
+  describe "#encoded" do
+    it "" do
+      expect(subject.encoded).to eq({"a" => "1", "b" => "should%20be%20encoded"})
+    end
+  end
+
   describe "#sign!(secret)" do
     # https://khipu.com/page/api-firma-requerimientos
     it "generates HMAC signature with encoded params" do
