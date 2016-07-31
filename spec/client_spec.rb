@@ -45,6 +45,28 @@ describe Khipu::ApiClient do
     end.and_return http_request
   end
 
+  context "local configuration" do
+    it "uses Configuration instance" do
+      conf = Khipu::Configuration.new.tap do |c|
+        c.secret           = 'aaxx'
+        c.host             = 'test.khipu.com'
+        c.base_path        = '/api/3.0'
+        c.receiver_id      = 1111
+        c.platform         = 'FooCompany'
+        c.platform_version = '1.2'
+      end
+
+      subject = described_class.new(conf)
+
+      assert_api_call(
+        url: "https://test.khipu.com/api/3.0/foo/bar",
+        method: :post,
+        ua: /FooCompany/
+      )
+      subject.call_api('post', '/foo/bar')
+    end
+  end
+
   context "global configuration" do
     before do
       Khipu.configure do  |c|
