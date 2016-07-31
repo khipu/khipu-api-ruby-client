@@ -60,6 +60,15 @@ describe Khipu::ApiClient do
       subject.call_api('post', '/foo/bar')
     end
 
+    context "invalid response" do
+      it "raises a meaningful exception" do
+        allow(http_response).to receive(:success?).and_return false
+        expect{
+          subject.call_api('post', '/foo/bar')
+        }.to raise_error Khipu::ApiError
+      end
+    end
+
     context "return types" do
       let(:resp) { subject.call_api('post', '/foo/bar', return_type: return_type) }
 
@@ -70,6 +79,7 @@ describe Khipu::ApiClient do
           expect(resp).to be_nil
         end
       end
+
       describe "SuccessResponse" do
         let(:return_type) { "SuccessResponse" }
 
