@@ -3,10 +3,6 @@ require 'json'
 require 'logger'
 require 'tempfile'
 require 'typhoeus'
-require 'uri'
-require 'net/http'
-require 'openssl'
-require 'base64'
 
 module Khipu
   class ApiClient
@@ -21,10 +17,11 @@ module Khipu
     # Stores the HTTP response from the last API call using this API client.
     attr_accessor :last_response
 
-    def initialize(host = nil)
-      @host = host || Configuration.base_url
+    def initialize(configuration = Configuration.instance)
+      @configuration = configuration
+      @host = @configuration.base_url
       @format = 'json'
-      @user_agent = "khipu-api-ruby-client/#{VERSION}" + "|" + (Configuration.platform || '') + "/" + (Configuration.platform_version || '')
+      @user_agent = "khipu-api-ruby-client/#{VERSION}" + "|" + (@configuration.platform || '') + "/" + (@configuration.platform_version || '')
       @default_headers = {
         'Content-Type' => "application/#{@format.downcase}",
         'User-Agent' => @user_agent
@@ -38,8 +35,8 @@ module Khipu
       # record as last response
       @last_response = response
 
-      if Configuration.debugging
-        Configuration.logger.debug "HTTP response body ~BEGIN~\n#{response.body}\n~END~\n"
+      if configuration.debugging
+        configuration.logger.debug "HTTP response body ~BEGIN~\n#{response.body}\n~END~\n"
       end
 
       unless response.success?
@@ -56,6 +53,10 @@ module Khipu
       end
     end
 
+    private
+
+    attr_reader :configuration
+
     def build_request(http_method, path, opts = {})
       url = build_request_url(path)
       http_method = http_method.to_sym.downcase
@@ -64,26 +65,33 @@ module Khipu
       query_params = opts[:query_params] || {}
       form_params = opts[:form_params] || {}
 
-      
-      update_params_for_auth! @host, path, http_method, header_params, query_params, form_params, opts[:auth_names]
-      
+
+      update_params_for_auth!(
+        @host,
+        path,
+        http_method,
+        header_params,
+        query_params,
+        form_params,
+        opts[:auth_names]
+      )
 
       req_opts = {
         :method => http_method,
         :headers => header_params,
         :params => query_params,
-        :ssl_verifypeer => Configuration.verify_ssl,
-        :sslcert => Configuration.cert_file,
-        :sslkey => Configuration.key_file,
-        :cainfo => Configuration.ssl_ca_cert,
-        :verbose => Configuration.debugging
+        :ssl_verifypeer => configuration.verify_ssl,
+        :sslcert => configuration.cert_file,
+        :sslkey => configuration.key_file,
+        :cainfo => configuration.ssl_ca_cert,
+        :verbose => configuration.debugging
       }
 
       if [:post, :patch, :put, :delete].include?(http_method)
         req_body = build_request_body(header_params, form_params, opts[:body])
         req_opts.update :body => req_body
-        if Configuration.debugging
-          Configuration.logger.debug "HTTP request body param ~BEGIN~\n#{req_body}\n~END~\n"
+        if configuration.debugging
+          configuration.logger.debug "HTTP request body param ~BEGIN~\n#{req_body}\n~END~\n"
         end
       end
 
@@ -165,7 +173,7 @@ module Khipu
     # @see Configuration#temp_folder_path
     # @return [File] the file downloaded
     def download_file(response)
-      tmp_file = Tempfile.new '', Configuration.temp_folder_path
+      tmp_file = Tempfile.new '', configuration.temp_folder_path
       content_disposition = response.headers['Content-Disposition']
       if content_disposition
         filename = content_disposition[/filename=['"]?([^'"\s]+)['"]?/, 1]
@@ -177,7 +185,7 @@ module Khipu
       tmp_file.close!
 
       File.open(path, 'w') { |file| file.write(response.body) }
-      Configuration.logger.info "File written to #{path}. Please move the file to a proper "\
+      configuration.logger.info "File written to #{path}. Please move the file to a proper "\
                                 "folder for further processing and delete the temp afterwards"
       File.new(path)
     end
@@ -204,38 +212,29 @@ module Khipu
       data
     end
 
-    def percent_encode(v)
-      return URI::escape(v.to_s.to_str, /[^a-zA-Z0-9\-\.\_\~]/)
-    end
-
-    # Update hearder and query params based on authentication settings.
+    # Update header and query params based on authentication settings.
     def update_params_for_auth!(host, path, http_method, header_params, query_params, form_params, auth_names)
       Array(auth_names).each do |auth_name|
         if auth_name == "khipu"
           params = query_params.merge(form_params)
 
-          encoded = {}
-          params.each do |k, v|
-            encoded[percent_encode(k)] = percent_encode(v)
+          signature = Khipu::Signature.new(
+            http_method,
+            [host, path].join,
+            params
+          )
+
+          if configuration.debugging
+            configuration.logger.debug "encoded params: #{signature.encoded}"
+            configuration.logger.debug "string to sign: #{signature.to_sign}"
           end
 
-          to_sign = http_method.to_s.upcase + "&" + percent_encode(host + path)
-
-          encoded.keys.sort.each do |key|
-            to_sign += "&#{key}=" + encoded[key]
-          end
-
-          if Configuration.debugging
-            Configuration.logger.debug "encoded params: #{encoded}"
-            Configuration.logger.debug "string to sign: #{to_sign}"
-          end
-
-          hash = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), Configuration.secret, to_sign)
-          header_params['Authorization'] = Configuration.receiver_id.to_s + ":" + hash
+          hash = signature.sign!(configuration.secret)
+          header_params['Authorization'] = configuration.receiver_id.to_s + ":" + hash
 
           next
         end
-        auth_setting = Configuration.auth_settings[auth_name]
+        auth_setting = configuration.auth_settings[auth_name]
         next unless auth_setting
         case auth_setting[:in]
         when 'header' then header_params[auth_setting[:key]] = auth_setting[:value]
@@ -250,32 +249,6 @@ module Khipu
       @default_headers['User-Agent'] = @user_agent
     end
 
-
-    # Return Accept header based on an array of accepts provided.
-    # @param [Array] accepts array for Accept
-    # @return [String] the Accept header (e.g. application/json)
-    def select_header_accept(accepts)
-      if accepts.empty?
-        return
-      elsif accepts.any?{ |s| s.casecmp('application/json') == 0 }
-        'application/json' # look for json data by default
-      else
-        accepts.join(',')
-      end
-    end
-
-    # Return Content-Type header based on an array of content types provided.
-    # @param [Array] content_types array for Content-Type
-    # @return [String] the Content-Type header  (e.g. application/json)
-    def select_header_content_type(content_types)
-      if content_types.empty?
-        'application/json' # use application/json by default
-      elsif content_types.any?{ |s| s.casecmp('application/json')==0 }
-        'application/json' # use application/json if it's included
-      else
-        content_types[0] # otherwise, use the first one
-      end
-    end
 
     # Convert object (array, hash, object, etc) to JSON string.
     # @param [Object] model object to be converted into JSON string

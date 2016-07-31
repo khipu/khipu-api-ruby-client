@@ -1,2 +1,4 @@
 *.gem
 .idea
+.rspec
+.byebug_history

@@ -81,7 +81,35 @@ print response
  #   ]
 ```
 
+### Multiple configurations
+
+If you need to support multiple configurations in the same process (for example for multi-account or "multi-tenant" apps), create an instance of `Configuration` and pass it to API instances.
+
+```ruby
+config = Khipu::Configuration.new.tap do |c|
+  c.secret           = 'abc123'
+  c.receiver_id      = 1234
+  c.platform         = 'my-ecomerce'
+  c.platform_version = '1.0'
+end
+
+# pass your own Configuration instance to API class.
+client    = Khipu::PaymentsApi.new(config)
+
+# now use it as normal
+response  = client.payments_get(notification_token)
+```
+
 ### Documentation
 
 - [API docs](https://khipu.com/page/api)
 - [gem docs](http://www.rubydoc.info/gems/khipu-api-client/)
+
+### Contributing
+
+* Fork and clone this gem
+* Install dependencies
+    `bundle install`
+* Run specs
+    `bundle exec rspec`
+

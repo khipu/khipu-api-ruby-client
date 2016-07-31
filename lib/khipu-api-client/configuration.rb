@@ -4,8 +4,6 @@ require 'singleton'
 module Khipu
   class Configuration
 
-    include Singleton
-
     # Default api client
     attr_accessor :api_client
 
@@ -100,10 +98,13 @@ module Khipu
     attr_accessor :platform_version
 
     class << self
+      def instance
+        @instance ||= new
+      end
+
       def method_missing(method_name, *args, &block)
-        config = Configuration.instance
-        if config.respond_to?(method_name)
-          config.send(method_name, *args, &block)
+        if instance.respond_to?(method_name)
+         instance.send(method_name, *args, &block)
         else
           super
         end
@@ -126,7 +127,7 @@ module Khipu
     end
 
     def api_client
-      @api_client ||= ApiClient.new
+      @api_client ||= ApiClient.new(self)
     end
 
     def scheme=(scheme)
