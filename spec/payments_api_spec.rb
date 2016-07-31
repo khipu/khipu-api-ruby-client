@@ -102,5 +102,30 @@ describe Khipu::PaymentsApi do
       expect(subject.payments_id_get(123)).to eq response_object
     end
   end
+
+  describe "#payments_id_delete(id, opts)" do
+    let(:response_object) {
+      Khipu::PaymentsResponse.new(
+       payment_id: "123",
+       payment_url: "http://host.com/a/b",
+      )
+    }
+
+    it "uses api_client to process request and wrap response" do
+      expect(api_client).to receive(:call_api) do |http_method, path, opts|
+        expect(http_method).to eq :DELETE
+        expect(path).to eq "/payments/123"
+        expect(opts[:header_params]["Accept"]).to eq "application/json"
+        expect(opts[:header_params]["Content-Type"]).to eq "application/x-www-form-urlencoded"
+        expect(opts[:query_params]).to eq({})
+        expect(opts[:form_params]).to eq({})
+        expect(opts[:body]).to be_nil
+        expect(opts[:auth_names]).to eq ["khipu"]
+        expect(opts[:return_type]).to eq "SuccessResponse"
+      end.and_return response_object
+
+      expect(subject.payments_id_delete(123)).to eq response_object
+    end
+  end
 end
 
