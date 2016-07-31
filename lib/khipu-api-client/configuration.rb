@@ -127,7 +127,7 @@ module Khipu
     end
 
     def api_client
-      @api_client ||= ApiClient.new
+      @api_client ||= ApiClient.new(self)
     end
 
     def scheme=(scheme)
