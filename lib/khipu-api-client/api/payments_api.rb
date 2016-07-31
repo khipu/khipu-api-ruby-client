@@ -17,10 +17,10 @@ module Khipu
       if Configuration.debugging
         Configuration.logger.debug "Calling API: PaymentsApi#payments_get ..."
       end
-      
+
       # verify the required parameter 'notification_token' is set
       fail "Missing the required parameter 'notification_token' when calling payments_get" if notification_token.nil?
-      
+
       # resource path
       path = "/payments".sub('{format}','json')
 
@@ -33,18 +33,18 @@ module Khipu
 
       # HTTP header 'Accept' (if needed)
       _header_accept = ['application/json']
-      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+      _header_accept_result = Utils.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
 
       # HTTP header 'Content-Type'
       _header_content_type = ['application/x-www-form-urlencoded']
-      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+      header_params['Content-Type'] = Utils.select_header_content_type(_header_content_type)
 
       # form parameters
       form_params = {}
 
       # http body (model)
       post_body = nil
-      
+
 
       auth_names = ['khipu']
       result = @api_client.call_api(:GET, path,
@@ -89,16 +89,16 @@ module Khipu
       if Configuration.debugging
         Configuration.logger.debug "Calling API: PaymentsApi#payments_post ..."
       end
-      
+
       # verify the required parameter 'subject' is set
       fail "Missing the required parameter 'subject' when calling payments_post" if subject.nil?
-      
+
       # verify the required parameter 'currency' is set
       fail "Missing the required parameter 'currency' when calling payments_post" if currency.nil?
-      
+
       # verify the required parameter 'amount' is set
       fail "Missing the required parameter 'amount' when calling payments_post" if amount.nil?
-      
+
       # resource path
       path = "/payments".sub('{format}','json')
 
@@ -110,11 +110,11 @@ module Khipu
 
       # HTTP header 'Accept' (if needed)
       _header_accept = ['application/json']
-      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+      _header_accept_result = Utils.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
 
       # HTTP header 'Content-Type'
       _header_content_type = ['application/x-www-form-urlencoded']
-      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+      header_params['Content-Type'] = Utils.select_header_content_type(_header_content_type)
 
       # form parameters
       form_params = {}
@@ -142,7 +142,7 @@ module Khipu
 
       # http body (model)
       post_body = nil
-      
+
 
       auth_names = ['khipu']
       result = @api_client.call_api(:POST, path,
@@ -167,10 +167,10 @@ module Khipu
       if Configuration.debugging
         Configuration.logger.debug "Calling API: PaymentsApi#payments_id_get ..."
       end
-      
+
       # verify the required parameter 'id' is set
       fail "Missing the required parameter 'id' when calling payments_id_get" if id.nil?
-      
+
       # resource path
       path = "/payments/{id}".sub('{format}','json').sub('{' + 'id' + '}', id.to_s)
 
@@ -182,18 +182,18 @@ module Khipu
 
       # HTTP header 'Accept' (if needed)
       _header_accept = ['application/json']
-      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+      _header_accept_result = Utils.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
 
       # HTTP header 'Content-Type'
       _header_content_type = ['application/x-www-form-urlencoded']
-      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+      header_params['Content-Type'] = Utils.select_header_content_type(_header_content_type)
 
       # form parameters
       form_params = {}
 
       # http body (model)
       post_body = nil
-      
+
 
       auth_names = ['khipu']
       result = @api_client.call_api(:GET, path,
@@ -218,10 +218,10 @@ module Khipu
       if Configuration.debugging
         Configuration.logger.debug "Calling API: PaymentsApi#payments_id_delete ..."
       end
-      
+
       # verify the required parameter 'id' is set
       fail "Missing the required parameter 'id' when calling payments_id_delete" if id.nil?
-      
+
       # resource path
       path = "/payments/{id}".sub('{format}','json').sub('{' + 'id' + '}', id.to_s)
 
@@ -233,18 +233,18 @@ module Khipu
 
       # HTTP header 'Accept' (if needed)
       _header_accept = ['application/json']
-      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+      _header_accept_result = Utils.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
 
       # HTTP header 'Content-Type'
       _header_content_type = ['application/x-www-form-urlencoded']
-      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+      header_params['Content-Type'] = Utils.select_header_content_type(_header_content_type)
 
       # form parameters
       form_params = {}
 
       # http body (model)
       post_body = nil
-      
+
 
       auth_names = ['khipu']
       result = @api_client.call_api(:DELETE, path,
@@ -270,10 +270,10 @@ module Khipu
       if Configuration.debugging
         Configuration.logger.debug "Calling API: PaymentsApi#payments_id_refunds_post ..."
       end
-      
+
       # verify the required parameter 'id' is set
       fail "Missing the required parameter 'id' when calling payments_id_refunds_post" if id.nil?
-      
+
       # resource path
       path = "/payments/{id}/refunds".sub('{format}','json').sub('{' + 'id' + '}', id.to_s)
 
@@ -285,11 +285,11 @@ module Khipu
 
       # HTTP header 'Accept' (if needed)
       _header_accept = ['application/json']
-      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+      _header_accept_result = Utils.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
 
       # HTTP header 'Content-Type'
       _header_content_type = ['application/x-www-form-urlencoded']
-      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+      header_params['Content-Type'] = Utils.select_header_content_type(_header_content_type)
 
       # form parameters
       form_params = {}
@@ -297,7 +297,7 @@ module Khipu
 
       # http body (model)
       post_body = nil
-      
+
 
       auth_names = ['khipu']
       result = @api_client.call_api(:POST, path,
@@ -314,7 +314,4 @@ module Khipu
     end
   end
 end
-
-
-
 
