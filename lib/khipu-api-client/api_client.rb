@@ -3,9 +3,7 @@ require 'json'
 require 'logger'
 require 'tempfile'
 require 'typhoeus'
-require 'uri'
 require 'net/http'
-require 'openssl'
 require 'base64'
 
 module Khipu
@@ -70,7 +68,15 @@ module Khipu
       form_params = opts[:form_params] || {}
 
 
-      update_params_for_auth! @host, path, http_method, header_params, query_params, form_params, opts[:auth_names]
+      update_params_for_auth!(
+        @host,
+        path,
+        http_method,
+        header_params,
+        query_params,
+        form_params,
+        opts[:auth_names]
+      )
 
       req_opts = {
         :method => http_method,
@@ -218,23 +224,18 @@ module Khipu
         if auth_name == "khipu"
           params = query_params.merge(form_params)
 
-          encoded = {}
-          params.each do |k, v|
-            encoded[percent_encode(k)] = percent_encode(v)
-          end
-
-          to_sign = http_method.to_s.upcase + "&" + percent_encode(host + path)
-
-          encoded.keys.sort.each do |key|
-            to_sign += "&#{key}=" + encoded[key]
-          end
+          signature = Khipu::Signature.new(
+            http_method,
+            [host, path].join,
+            params
+          )
 
           if configuration.debugging
-            configuration.logger.debug "encoded params: #{encoded}"
-            configuration.logger.debug "string to sign: #{to_sign}"
+            configuration.logger.debug "encoded params: #{signature.encoded}"
+            configuration.logger.debug "string to sign: #{signature.to_sign}"
           end
 
-          hash = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), configuration.secret, to_sign)
+          hash = signature.sign!(configuration.secret)
           header_params['Authorization'] = configuration.receiver_id.to_s + ":" + hash
 
           next

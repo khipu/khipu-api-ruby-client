@@ -1,4 +1,5 @@
 # Common files
+require 'khipu-api-client/signature'
 require 'khipu-api-client/api_client'
 require 'khipu-api-client/api_error'
 require 'khipu-api-client/version'

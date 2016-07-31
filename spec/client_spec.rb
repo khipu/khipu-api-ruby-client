@@ -35,13 +35,14 @@ describe Khipu::ApiClient do
     allow(Typhoeus::Request).to receive(:new).and_return http_request
   end
 
-  def assert_api_call(url:, method: :post, ua: /ACME/)
+  def assert_api_call(url:, method: :post, ua: /ACME/, &block)
     expect(Typhoeus::Request).to receive(:new) do |u, opts|
       expect(u).to eq url
       expect(opts[:method]).to eq method
       opts[:headers].tap do |h|
         expect(h["User-Agent"]).to match(ua)
       end
+      yield(opts) if block
     end.and_return http_request
   end
 
@@ -80,6 +81,26 @@ describe Khipu::ApiClient do
     it "calls API with global configuration" do
       assert_api_call url: "https://khipu.com/api/2.0/foo/bar", method: :post
       subject.call_api('post', '/foo/bar')
+    end
+
+    it "sends the right authorization" do
+      signature = Khipu::Signature.new(
+        :post,
+        'https://khipu.com/api/2.0/foo/bar',
+        {'a' => 1, 'b' => 2, 'c' => 3, 'd' => 4},
+      ).sign!('abc123')
+
+      assert_api_call(url: "https://khipu.com/api/2.0/foo/bar", method: :post) do |opts|
+        auth = opts[:headers]["Authorization"]
+        expect(auth).to eq "1234:#{signature}"
+      end
+
+      subject.call_api('post', '/foo/bar', {
+        query_params: {'a' => 1, 'b' => 2},
+        form_params: {'c' => 3, 'd' => 4},
+        header_params: {'FooHeader' => 'Bar'},
+        auth_names: ["khipu"]
+      })
     end
 
     context "invalid response" do
