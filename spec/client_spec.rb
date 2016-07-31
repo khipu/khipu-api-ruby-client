@@ -63,6 +63,13 @@ describe Khipu::ApiClient do
     context "return types" do
       let(:resp) { subject.call_api('post', '/foo/bar', return_type: return_type) }
 
+      describe "no return type" do
+        let(:return_type) { nil }
+
+        it "returns nil" do
+          expect(resp).to be_nil
+        end
+      end
       describe "SuccessResponse" do
         let(:return_type) { "SuccessResponse" }
 
@@ -93,6 +100,119 @@ describe Khipu::ApiClient do
           expect(resp.min_amount).to eq 10.0
           expect(resp.type).to eq "commercial"
           expect(resp.parent).to eq "ACME INC"
+        end
+      end
+
+      describe "String" do
+        let(:response_body) { "A string" }
+        let(:return_type) { "String" }
+
+        it "returns expected response" do
+          expect(resp).to eq "A string"
+        end
+      end
+
+      describe "Integer" do
+        let(:response_body) { "1234" }
+        let(:return_type) { "Integer" }
+
+        it "returns expected response" do
+          expect(resp).to eq 1234
+        end
+      end
+
+      describe "Float" do
+        let(:response_body) { "1234.12" }
+        let(:return_type) { "Float" }
+
+        it "returns expected response" do
+          expect(resp).to eq 1234.12
+        end
+      end
+
+      describe "BOOLEAN" do
+        let(:response_body) { "true" }
+        let(:return_type) { "BOOLEAN" }
+
+        it "returns expected response" do
+          expect(resp).to eq true
+        end
+      end
+
+      describe "DateTime" do
+        let(:response_body) { "2001-02-03 10:00:00" }
+        let(:return_type) { "DateTime" }
+
+        it "returns expected response" do
+          expect(resp).to be_a DateTime
+          expect(resp.year).to eq 2001
+          expect(resp.month).to eq 2
+          expect(resp.day).to eq 3
+          expect(resp.hour).to eq 10
+        end
+      end
+
+      describe "Date" do
+        let(:response_body) { "2001-02-03 10:00:00" }
+        let(:return_type) { "Date" }
+
+        it "returns expected response" do
+          expect(resp).to be_a Date
+          expect(resp.year).to eq 2001
+          expect(resp.month).to eq 2
+          expect(resp.day).to eq 3
+        end
+      end
+
+      describe "Object" do
+        let(:return_type) { "Object" }
+        let(:body_data) {
+          {
+            foo: {
+              bar: [1,2,3]
+            }
+          }
+        }
+
+        it "returns expected response" do
+          expect(resp).to be_a Hash
+          expect(resp[:foo]).to eq(
+            {
+              bar: [1,2,3]
+            }
+          )
+        end
+      end
+
+      describe "Array" do
+        let(:return_type) { "Array<Object>" }
+        let(:body_data) {
+          [
+            {name: "Foo"},
+            {name: "Bar"}
+          ]
+        }
+
+        it "returns expected response" do
+          expect(resp).to be_a Array
+          expect(resp[0][:name]).to eq "Foo"
+          expect(resp[1][:name]).to eq "Bar"
+        end
+      end
+
+      describe "Hash" do
+        let(:return_type) { "Hash<String, Object>" }
+        let(:body_data) {
+          {
+            one: {name: "Foo"},
+            two: {name: "Bar"},
+          }
+        }
+
+        it "returns expected response" do
+          expect(resp).to be_a Hash
+          expect(resp[:one][:name]).to eq "Foo"
+          expect(resp[:two][:name]).to eq "Bar"
         end
       end
     end
