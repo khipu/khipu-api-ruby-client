@@ -4,8 +4,9 @@ module Khipu
   class ReceiversApi
     attr_accessor :api_client
 
-    def initialize(api_client = nil)
-      @api_client = api_client || Configuration.api_client
+    def initialize(configuration = Configuration.instance)
+      @configuration = configuration
+      @api_client = configuration.api_client
     end
 
     # Crear una nueva cuenta de cobro
@@ -28,8 +29,8 @@ module Khipu
     # @param [Hash] opts the optional parameters
     # @return [ReceiversCreateResponse]
     def receivers_post(admin_first_name, admin_last_name, admin_email, country_code, business_identifier, business_category, business_name, business_phone, business_address_line_1, business_address_line_2, business_address_line_3, contact_full_name, contact_job_title, contact_email, contact_phone, opts = {})
-      if Configuration.debugging
-        Configuration.logger.debug "Calling API: ReceiversApi#receivers_post ..."
+      if configuration.debugging
+        configuration.logger.debug "Calling API: ReceiversApi#receivers_post ..."
       end
 
       # verify the required parameter 'admin_first_name' is set
@@ -117,18 +118,21 @@ module Khipu
 
 
       auth_names = ['khipu']
-      result = @api_client.call_api(:POST, path,
+      result = api_client.call_api(:POST, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'ReceiversCreateResponse')
-      if Configuration.debugging
-        Configuration.logger.debug "API called: ReceiversApi#receivers_post. Result: #{result.inspect}"
+      if configuration.debugging
+        configuration.logger.debug "API called: ReceiversApi#receivers_post. Result: #{result.inspect}"
       end
       return result
     end
+
+    private
+    attr_reader :api_client, :configuration
   end
 end
 
