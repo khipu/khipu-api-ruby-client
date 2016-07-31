@@ -85,3 +85,12 @@ print response
 
 - [API docs](https://khipu.com/page/api)
 - [gem docs](http://www.rubydoc.info/gems/khipu-api-client/)
+
+### Contributing
+
+* Fork and clone this gem
+* Install dependencies
+    `bundle install`
+* Run specs
+    `bundle exec rspec`
+
