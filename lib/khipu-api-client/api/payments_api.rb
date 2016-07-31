@@ -2,8 +2,6 @@ require "uri"
 
 module Khipu
   class PaymentsApi
-    attr_accessor :api_client
-
     def initialize(configuration = Configuration.instance)
       @configuration = configuration
       @api_client = configuration.api_client
