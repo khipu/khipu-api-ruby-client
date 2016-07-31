@@ -4,8 +4,9 @@ module Khipu
   class PaymentsApi
     attr_accessor :api_client
 
-    def initialize(api_client = nil)
-      @api_client = api_client || Configuration.api_client
+    def initialize(configuration = Configuration.instance)
+      @configuration = configuration
+      @api_client = configuration.api_client
     end
 
     # Obtener información de un pago
@@ -14,8 +15,8 @@ module Khipu
     # @param [Hash] opts the optional parameters
     # @return [PaymentsResponse]
     def payments_get(notification_token, opts = {})
-      if Configuration.debugging
-        Configuration.logger.debug "Calling API: PaymentsApi#payments_get ..."
+      if configuration.debugging
+        configuration.logger.debug "Calling API: PaymentsApi#payments_get ..."
       end
 
       # verify the required parameter 'notification_token' is set
@@ -47,15 +48,15 @@ module Khipu
 
 
       auth_names = ['khipu']
-      result = @api_client.call_api(:GET, path,
+      result = api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'PaymentsResponse')
-      if Configuration.debugging
-        Configuration.logger.debug "API called: PaymentsApi#payments_get. Result: #{result.inspect}"
+      if configuration.debugging
+        configuration.logger.debug "API called: PaymentsApi#payments_get. Result: #{result.inspect}"
       end
       return result
     end
@@ -86,8 +87,8 @@ module Khipu
     # @option opts [Float] :integrator_fee Comisión para el integrador. Sólo es válido si la cuenta de cobro tiene una cuenta de integrador asociada
     # @return [PaymentsCreateResponse]
     def payments_post(subject, currency, amount, opts = {})
-      if Configuration.debugging
-        Configuration.logger.debug "Calling API: PaymentsApi#payments_post ..."
+      if configuration.debugging
+        configuration.logger.debug "Calling API: PaymentsApi#payments_post ..."
       end
 
       # verify the required parameter 'subject' is set
@@ -145,15 +146,15 @@ module Khipu
 
 
       auth_names = ['khipu']
-      result = @api_client.call_api(:POST, path,
+      result = api_client.call_api(:POST, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'PaymentsCreateResponse')
-      if Configuration.debugging
-        Configuration.logger.debug "API called: PaymentsApi#payments_post. Result: #{result.inspect}"
+      if configuration.debugging
+        configuration.logger.debug "API called: PaymentsApi#payments_post. Result: #{result.inspect}"
       end
       return result
     end
@@ -164,8 +165,8 @@ module Khipu
     # @param [Hash] opts the optional parameters
     # @return [PaymentsResponse]
     def payments_id_get(id, opts = {})
-      if Configuration.debugging
-        Configuration.logger.debug "Calling API: PaymentsApi#payments_id_get ..."
+      if configuration.debugging
+        configuration.logger.debug "Calling API: PaymentsApi#payments_id_get ..."
       end
 
       # verify the required parameter 'id' is set
@@ -196,15 +197,15 @@ module Khipu
 
 
       auth_names = ['khipu']
-      result = @api_client.call_api(:GET, path,
+      result = api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'PaymentsResponse')
-      if Configuration.debugging
-        Configuration.logger.debug "API called: PaymentsApi#payments_id_get. Result: #{result.inspect}"
+      if configuration.debugging
+        configuration.logger.debug "API called: PaymentsApi#payments_id_get. Result: #{result.inspect}"
       end
       return result
     end
@@ -215,8 +216,8 @@ module Khipu
     # @param [Hash] opts the optional parameters
     # @return [SuccessResponse]
     def payments_id_delete(id, opts = {})
-      if Configuration.debugging
-        Configuration.logger.debug "Calling API: PaymentsApi#payments_id_delete ..."
+      if configuration.debugging
+        configuration.logger.debug "Calling API: PaymentsApi#payments_id_delete ..."
       end
 
       # verify the required parameter 'id' is set
@@ -247,15 +248,15 @@ module Khipu
 
 
       auth_names = ['khipu']
-      result = @api_client.call_api(:DELETE, path,
+      result = api_client.call_api(:DELETE, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'SuccessResponse')
-      if Configuration.debugging
-        Configuration.logger.debug "API called: PaymentsApi#payments_id_delete. Result: #{result.inspect}"
+      if configuration.debugging
+        configuration.logger.debug "API called: PaymentsApi#payments_id_delete. Result: #{result.inspect}"
       end
       return result
     end
@@ -267,8 +268,8 @@ module Khipu
     # @option opts [Float] :amount El monto a devolver. Sin separador de miles y usando &#39;.&#39; como separador de decimales. Hasta 4 lugares decimales, dependiendo de la moneda. Si se omite el reembolso se hará por el total del monto del pago.
     # @return [SuccessResponse]
     def payments_id_refunds_post(id, opts = {})
-      if Configuration.debugging
-        Configuration.logger.debug "Calling API: PaymentsApi#payments_id_refunds_post ..."
+      if configuration.debugging
+        configuration.logger.debug "Calling API: PaymentsApi#payments_id_refunds_post ..."
       end
 
       # verify the required parameter 'id' is set
@@ -300,18 +301,22 @@ module Khipu
 
 
       auth_names = ['khipu']
-      result = @api_client.call_api(:POST, path,
+      result = api_client.call_api(:POST, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'SuccessResponse')
-      if Configuration.debugging
-        Configuration.logger.debug "API called: PaymentsApi#payments_id_refunds_post. Result: #{result.inspect}"
+      if configuration.debugging
+        configuration.logger.debug "API called: PaymentsApi#payments_id_refunds_post. Result: #{result.inspect}"
       end
       return result
     end
+
+    private
+
+    attr_reader :configuration, :api_client
   end
 end
 
