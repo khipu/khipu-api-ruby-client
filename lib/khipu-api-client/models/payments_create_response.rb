@@ -1,7 +1,7 @@
 module Khipu
   # 
   class PaymentsCreateResponse < BaseObject
-    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :app_url, :ready_for_terminal
+    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :webpay_url, :hites_url, :payme_url, :app_url, :ready_for_terminal
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -17,6 +17,15 @@ module Khipu
         
         # URL de pago normal
         :'transfer_url' => :'transfer_url',
+        
+        # URL de pago usando Webpay
+        :'webpay_url' => :'webpay_url',
+        
+        # URL de pago usando Hites
+        :'hites_url' => :'hites_url',
+        
+        # URL de pago usando Hites
+        :'payme_url' => :'payme_url',
         
         # URL para invocar el pago desde un dispositivo móvil usando la APP de khipu
         :'app_url' => :'app_url',
@@ -34,6 +43,9 @@ module Khipu
         :'payment_url' => :'String',
         :'simplified_transfer_url' => :'String',
         :'transfer_url' => :'String',
+        :'webpay_url' => :'String',
+        :'hites_url' => :'String',
+        :'payme_url' => :'String',
         :'app_url' => :'String',
         :'ready_for_terminal' => :'BOOLEAN'
         
@@ -61,6 +73,18 @@ module Khipu
       
       if attributes[:'transfer_url']
         self.transfer_url = attributes[:'transfer_url']
+      end
+      
+      if attributes[:'webpay_url']
+        self.webpay_url = attributes[:'webpay_url']
+      end
+      
+      if attributes[:'hites_url']
+        self.hites_url = attributes[:'hites_url']
+      end
+      
+      if attributes[:'payme_url']
+        self.payme_url = attributes[:'payme_url']
       end
       
       if attributes[:'app_url']

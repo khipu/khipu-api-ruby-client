@@ -11,6 +11,8 @@ require 'khipu-api-client/models/payments_create_response'
 require 'khipu-api-client/models/receivers_create_response'
 require 'khipu-api-client/models/banks_response'
 require 'khipu-api-client/models/bank_item'
+require 'khipu-api-client/models/payment_methods_response'
+require 'khipu-api-client/models/payment_method_item'
 require 'khipu-api-client/models/success_response'
 require 'khipu-api-client/models/authorization_error'
 require 'khipu-api-client/models/service_error'
@@ -18,9 +20,10 @@ require 'khipu-api-client/models/validation_error'
 require 'khipu-api-client/models/error_item'
 
 # APIs
+require 'khipu-api-client/api/receivers_api'
 require 'khipu-api-client/api/banks_api'
 require 'khipu-api-client/api/payments_api'
-require 'khipu-api-client/api/receivers_api'
+require 'khipu-api-client/api/payment_methods_api'
 
 module Khipu
   class << self

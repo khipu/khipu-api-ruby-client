@@ -1,7 +1,7 @@
 module Khipu
   # 
   class PaymentsResponse < BaseObject
-    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :app_url, :ready_for_terminal, :notification_token, :receiver_id, :conciliation_date, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation, :transaction_id, :custom, :responsible_user_email, :send_reminders, :send_email, :payment_method
+    attr_accessor :payment_id, :payment_url, :simplified_transfer_url, :transfer_url, :webpay_url, :hites_url, :payme_url, :app_url, :ready_for_terminal, :notification_token, :receiver_id, :conciliation_date, :subject, :amount, :currency, :status, :status_detail, :body, :picture_url, :receipt_url, :return_url, :cancel_url, :notify_url, :notify_api_version, :expires_date, :attachment_urls, :bank, :bank_id, :payer_name, :payer_email, :personal_identifier, :bank_account_number, :out_of_date_conciliation, :transaction_id, :custom, :responsible_user_email, :send_reminders, :send_email, :payment_method
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -17,6 +17,15 @@ module Khipu
         
         # URL de pago normal
         :'transfer_url' => :'transfer_url',
+        
+        # URL de pago con Webpay
+        :'webpay_url' => :'webpay_url',
+        
+        # URL de pago con Hites
+        :'hites_url' => :'hites_url',
+        
+        # URL de pago con Hites
+        :'payme_url' => :'payme_url',
         
         # URL para invocar el pago desde un dispositivo móvil usando la APP de khipu
         :'app_url' => :'app_url',
@@ -36,7 +45,7 @@ module Khipu
         # Motivo del pago
         :'subject' => :'subject',
         
-        # 
+        # Monto del pago, sin separador de miles y usando &#39;.&#39; como separador de decimales.
         :'amount' => :'amount',
         
         # El código de moneda en formato ISO-4217
@@ -124,6 +133,9 @@ module Khipu
         :'payment_url' => :'String',
         :'simplified_transfer_url' => :'String',
         :'transfer_url' => :'String',
+        :'webpay_url' => :'String',
+        :'hites_url' => :'String',
+        :'payme_url' => :'String',
         :'app_url' => :'String',
         :'ready_for_terminal' => :'BOOLEAN',
         :'notification_token' => :'String',
@@ -181,6 +193,18 @@ module Khipu
       
       if attributes[:'transfer_url']
         self.transfer_url = attributes[:'transfer_url']
+      end
+      
+      if attributes[:'webpay_url']
+        self.webpay_url = attributes[:'webpay_url']
+      end
+      
+      if attributes[:'hites_url']
+        self.hites_url = attributes[:'hites_url']
+      end
+      
+      if attributes[:'payme_url']
+        self.payme_url = attributes[:'payme_url']
       end
       
       if attributes[:'app_url']

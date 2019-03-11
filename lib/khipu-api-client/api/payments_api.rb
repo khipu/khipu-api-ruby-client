@@ -84,6 +84,9 @@ module Khipu
     # @option opts [String] :responsible_user_email Correo electrónico del responsable de este cobro, debe corresponder a un usuario khipu con permisos para cobrar usando esta cuenta de cobro
     # @option opts [String] :fixed_payer_personal_identifier Identificador personal. Si se especifica, solo podrá ser pagado usando ese identificador
     # @option opts [Float] :integrator_fee Comisión para el integrador. Sólo es válido si la cuenta de cobro tiene una cuenta de integrador asociada
+    # @option opts [BOOLEAN] :collect_account_uuid Para cuentas de cobro con más cuenta propia. Permite elegir la cuenta donde debe ocurrir la transferencia.
+    # @option opts [String] :confirm_timeout_date Fecha de rendición del cobro. Es también la fecha final para poder reembolsar el cobro. Formato ISO-8601. Ej: 2017-03-01T13:00:00Z
+    # @option opts [String] :mandatory_payment_method Si se especifica, el cobro sólo se podrá pagar utilizando ese medio de pago. El valor para el campo de obtiene consultando el endpoint &#39;Consulta medios de pago disponibles&#39;.
     # @return [PaymentsCreateResponse]
     def payments_post(subject, currency, amount, opts = {})
       if Configuration.debugging
@@ -139,6 +142,9 @@ module Khipu
       form_params["responsible_user_email"] = opts[:'responsible_user_email'] if opts[:'responsible_user_email']
       form_params["fixed_payer_personal_identifier"] = opts[:'fixed_payer_personal_identifier'] if opts[:'fixed_payer_personal_identifier']
       form_params["integrator_fee"] = opts[:'integrator_fee'] if opts[:'integrator_fee']
+      form_params["collect_account_uuid"] = opts[:'collect_account_uuid'] if opts[:'collect_account_uuid']
+      form_params["confirm_timeout_date"] = opts[:'confirm_timeout_date'] if opts[:'confirm_timeout_date']
+      form_params["mandatory_payment_method"] = opts[:'mandatory_payment_method'] if opts[:'mandatory_payment_method']
 
       # http body (model)
       post_body = nil
@@ -256,6 +262,57 @@ module Khipu
         :return_type => 'SuccessResponse')
       if Configuration.debugging
         Configuration.logger.debug "API called: PaymentsApi#payments_id_delete. Result: #{result.inspect}"
+      end
+      return result
+    end
+
+    # Confirmar el pago.
+    # Al confirmar el pago, este será rendido al día siguiente.
+    # @param id Identificador del pago
+    # @param [Hash] opts the optional parameters
+    # @return [SuccessResponse]
+    def payments_id_confirm_post(id, opts = {})
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: PaymentsApi#payments_id_confirm_post ..."
+      end
+      
+      # verify the required parameter 'id' is set
+      fail "Missing the required parameter 'id' when calling payments_id_confirm_post" if id.nil?
+      
+      # resource path
+      path = "/payments/{id}/confirm".sub('{format}','json').sub('{' + 'id' + '}', id.to_s)
+
+      # query parameters
+      query_params = {}
+
+      # header parameters
+      header_params = {}
+
+      # HTTP header 'Accept' (if needed)
+      _header_accept = ['application/json']
+      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+
+      # HTTP header 'Content-Type'
+      _header_content_type = ['application/x-www-form-urlencoded']
+      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+
+      # form parameters
+      form_params = {}
+
+      # http body (model)
+      post_body = nil
+      
+
+      auth_names = ['khipu']
+      result = @api_client.call_api(:POST, path,
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => 'SuccessResponse')
+      if Configuration.debugging
+        Configuration.logger.debug "API called: PaymentsApi#payments_id_confirm_post. Result: #{result.inspect}"
       end
       return result
     end

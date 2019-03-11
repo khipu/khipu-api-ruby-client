@@ -60,7 +60,8 @@ module Khipu
     # return the object in the form of hash
     def to_hash
       hash = {}
-      self.class.attribute_map.each_pair do |attr, param|
+      attributes = self.class.attribute_map.sort_by {|key,value| key}
+      attributes.each { |attr, param|
         value = self.send(attr)
         next if value.nil?
         if value.is_a?(Array)
@@ -68,7 +69,7 @@ module Khipu
         else
           hash[param] = _to_hash(value)
         end
-      end
+      }
       hash
     end
 

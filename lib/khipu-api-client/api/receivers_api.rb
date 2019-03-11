@@ -26,6 +26,12 @@ module Khipu
     # @param contact_email Correo electrónico del contacto del cobrador.
     # @param contact_phone Teléfono del contacto del cobrador.
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :bank_account_bank_id Identificador del banco.
+    # @option opts [String] :bank_account_identifier Identificador personal del dueño de la cuenta de banco.
+    # @option opts [String] :bank_account_name Nombre de la cuenta de banco.
+    # @option opts [String] :bank_account_number Número de la cuenta en el banco.
+    # @option opts [String] :notify_url URL por omisión para el webservice donde se notificará el pago.
+    # @option opts [String] :rendition_url URL para el webservice donde se notificará la rendición.
     # @return [ReceiversCreateResponse]
     def receivers_post(admin_first_name, admin_last_name, admin_email, country_code, business_identifier, business_category, business_name, business_phone, business_address_line_1, business_address_line_2, business_address_line_3, contact_full_name, contact_job_title, contact_email, contact_phone, opts = {})
       if Configuration.debugging
@@ -111,6 +117,12 @@ module Khipu
       form_params["contact_job_title"] = contact_job_title
       form_params["contact_email"] = contact_email
       form_params["contact_phone"] = contact_phone
+      form_params["bank_account_bank_id"] = opts[:'bank_account_bank_id'] if opts[:'bank_account_bank_id']
+      form_params["bank_account_identifier"] = opts[:'bank_account_identifier'] if opts[:'bank_account_identifier']
+      form_params["bank_account_name"] = opts[:'bank_account_name'] if opts[:'bank_account_name']
+      form_params["bank_account_number"] = opts[:'bank_account_number'] if opts[:'bank_account_number']
+      form_params["notify_url"] = opts[:'notify_url'] if opts[:'notify_url']
+      form_params["rendition_url"] = opts[:'rendition_url'] if opts[:'rendition_url']
 
       # http body (model)
       post_body = nil

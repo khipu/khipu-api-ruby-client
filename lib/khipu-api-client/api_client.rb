@@ -65,7 +65,7 @@ module Khipu
       form_params = opts[:form_params] || {}
 
       
-      update_params_for_auth! @host, path, http_method, header_params, query_params, form_params, opts[:auth_names]
+      update_params_for_auth! @host, path, http_method, header_params, query_params, form_params, opts[:auth_names], opts[:body]
       
 
       req_opts = {
@@ -209,7 +209,7 @@ module Khipu
     end
 
     # Update hearder and query params based on authentication settings.
-    def update_params_for_auth!(host, path, http_method, header_params, query_params, form_params, auth_names)
+    def update_params_for_auth!(host, path, http_method, header_params, query_params, form_params, auth_names, body)
       Array(auth_names).each do |auth_name|
         if auth_name == "khipu"
           params = query_params.merge(form_params)
@@ -224,7 +224,9 @@ module Khipu
           encoded.keys.sort.each do |key|
             to_sign += "&#{key}=" + encoded[key]
           end
-
+          if !body.nil? && header_params['Content-Type']=='application/json'
+             to_sign += "&" + body
+          end
           if Configuration.debugging
             Configuration.logger.debug "encoded params: #{encoded}"
             Configuration.logger.debug "string to sign: #{to_sign}"
