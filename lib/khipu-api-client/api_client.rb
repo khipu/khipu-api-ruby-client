@@ -76,7 +76,8 @@ module Khipu
         :sslcert => Configuration.cert_file,
         :sslkey => Configuration.key_file,
         :cainfo => Configuration.ssl_ca_cert,
-        :verbose => Configuration.debugging
+        :verbose => Configuration.debugging,
+        :timeout => Configuration.timeout
       }
 
       if [:post, :patch, :put, :delete].include?(http_method)

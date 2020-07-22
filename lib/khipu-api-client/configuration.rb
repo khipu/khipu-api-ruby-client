@@ -6,6 +6,8 @@ module Khipu
 
     include Singleton
 
+    attr_accessor :timeout
+
     # Default api client
     attr_accessor :api_client
 
