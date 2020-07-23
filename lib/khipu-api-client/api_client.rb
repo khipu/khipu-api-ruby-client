@@ -43,10 +43,11 @@ module Khipu
       end
 
       unless response.success?
+        msg = response.status_message || response.timed_out? ? 'khipu_timeout' : ''
         fail ApiError.new(:code => response.code,
                           :response_headers => response.headers,
                           :response_body => response.body),
-             response.status_message
+             msg
       end
 
       if opts[:return_type]
