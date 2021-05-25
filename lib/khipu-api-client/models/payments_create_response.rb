@@ -6,7 +6,7 @@ module Khipu
     def self.attribute_map
       {
         
-        # Identificador único del pago, es una cadena alfanumérica de 12 caracteres
+        # Identificador único del pago, es una cadena alfanumérica de 12 caracteres. Cómo este identificador es único, se puede usar, por ejemplo, para evitar procesar una notificación repetida. (Khipu espera un código 200 al notificar un pago, si esto no ocurre se reintenta hasta por dos días).
         :'payment_id' => :'payment_id',
         
         # URL principal del pago, si el usuario no ha elegido previamente un método de pago se le muestran las opciones
