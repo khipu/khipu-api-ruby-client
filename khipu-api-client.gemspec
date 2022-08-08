@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.description = %q{This gem maps to a swagger API}
   s.license     = "Apache-2.0"
 
-  s.add_runtime_dependency 'typhoeus', '~> 1.0', '>= 1.0.1'
+  s.add_runtime_dependency 'httparty', '0.20.0'
   s.add_runtime_dependency 'json', '~> 2.1', '>= 2.1.0'
 
   s.add_development_dependency 'rspec', '~> 3.6', '>= 3.6.0'

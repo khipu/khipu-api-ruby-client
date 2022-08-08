@@ -77,8 +77,6 @@ module Khipu
     #
     # @return [String] the path to the certificate file
     #
-    # @see The `cainfo` option of Typhoeus, `--cert` option of libcurl. Related source code:
-    # https://github.com/typhoeus/typhoeus/blob/master/lib/typhoeus/easy_factory.rb#L145
     attr_accessor :ssl_ca_cert
 
     # Client certificate file (for client certificate)
