@@ -2,11 +2,11 @@ require 'date'
 require 'json'
 require 'logger'
 require 'tempfile'
-require 'typhoeus'
 require 'uri'
 require 'net/http'
 require 'openssl'
 require 'base64'
+require 'httparty'
 
 module Khipu
   class ApiClient
@@ -64,9 +64,7 @@ module Khipu
       query_params = opts[:query_params] || {}
       form_params = opts[:form_params] || {}
 
-      
       update_params_for_auth! @host, path, http_method, header_params, query_params, form_params, opts[:auth_names], opts[:body]
-      
 
       req_opts = {
         :method => http_method,
@@ -87,7 +85,7 @@ module Khipu
         end
       end
 
-      Typhoeus::Request.new(url, req_opts)
+      HTTParty.send(req_opts[:method], url, { headers: req_opts[:headers], body: req_opts[:body] })
     end
 
     # Deserialize the response to the given return type.
